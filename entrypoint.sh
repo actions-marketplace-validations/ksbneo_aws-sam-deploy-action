@@ -81,5 +81,8 @@ echo "[default]
 output = text
 region = $AWS_REGION" > ~/.aws/config
 
+aws configure set default.s3.multipart_threshold 256MB
+aws configure set default.s3.multipart_chunksize 64MB
+
 aws cloudformation package --template-file $TEMPLATE --output-template-file serverless-output.yaml --s3-bucket $AWS_DEPLOY_BUCKET $AWS_BUCKET_PREFIX $FORCE_UPLOAD $USE_JSON
 aws cloudformation deploy --template-file serverless-output.yaml --stack-name $AWS_STACK_NAME --s3-bucket $AWS_DEPLOY_BUCKET $CAPABILITIES $PARAMETER_OVERRIDES $TAGS $NO_FAIL_EMPTY_CHANGESET
