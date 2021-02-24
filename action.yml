@@ -1,6 +1,6 @@
-name: 'AWS SAM Deploy'
-description: 'Deploys AWS SAM Stack'
-author: 'Jan Alfred Richter <falnyr@gmail.com>'
+name: 'AWS SAM Deploy Enhancement'
+description: 'Deploys AWS SAM Stack without split big file'
+author: 'Neo Xie <xieliangchang@gmail.com>'
 branding:
   icon: 'upload-cloud'
   color: 'orange'
