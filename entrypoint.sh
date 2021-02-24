@@ -75,26 +75,25 @@ touch ~/.aws/config
 echo "[default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-region = $AWS_REGION" > ~/.aws/credentials
+region = $AWS_REGION" >~/.aws/credentials
 
 echo "[default]
 output = text
-region = $AWS_REGION" > ~/.aws/config
+region = $AWS_REGION" >~/.aws/config
 
 aws configure set default.s3.multipart_threshold 256MB
 aws configure set default.s3.multipart_chunksize 64MB
 
-cat ~/.aws/config
+# cat ~/.aws/config
 
 # create buckets if not exists
-if aws s3api head-bucket --bucket "$AWS_DEPLOY_BUCKET" --region $AWS_REGION 2>/dev/null; then
-  echo $AWS_DEPLOY_BUCKET exists!
-else
-  echo $AWS_DEPLOY_BUCKET not exists and going to create it!
-  aws s3 mb s3://$AWS_DEPLOY_BUCKET --region $AWS_REGION
-  echo "$AWS_DEPLOY_BUCKET is created"
-fi
+# if aws s3api head-bucket --bucket "$AWS_DEPLOY_BUCKET" --region $AWS_REGION 2>/dev/null; then
+#   echo $AWS_DEPLOY_BUCKET exists!
+# else
+#   echo $AWS_DEPLOY_BUCKET not exists and going to create it!
+#   aws s3 mb s3://$AWS_DEPLOY_BUCKET --region $AWS_REGION
+#   echo "$AWS_DEPLOY_BUCKET is created"
+# fi
 
-echo "aws cloudformation package --template-file $TEMPLATE --output-template-file serverless-output.yaml --s3-bucket $AWS_DEPLOY_BUCKET $AWS_BUCKET_PREFIX $FORCE_UPLOAD $USE_JSON"
 aws cloudformation package --template-file $TEMPLATE --output-template-file serverless-output.yaml --s3-bucket $AWS_DEPLOY_BUCKET $AWS_BUCKET_PREFIX $FORCE_UPLOAD $USE_JSON
-# aws cloudformation deploy --template-file serverless-output.yaml --stack-name $AWS_STACK_NAME --s3-bucket $AWS_DEPLOY_BUCKET $CAPABILITIES $PARAMETER_OVERRIDES $TAGS $NO_FAIL_EMPTY_CHANGESET
+aws cloudformation deploy --template-file serverless-output.yaml --stack-name $AWS_STACK_NAME --s3-bucket $AWS_DEPLOY_BUCKET $CAPABILITIES $PARAMETER_OVERRIDES $TAGS $NO_FAIL_EMPTY_CHANGESET
